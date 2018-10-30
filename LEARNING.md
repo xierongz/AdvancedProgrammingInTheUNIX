@@ -24,7 +24,7 @@
 
     例：sar:x:205:105:Stephen Rago:/home/sar:/bin/ksh
 
-注：目前所有的系统已将加密口令移到[另一个文件中](#第六章)
+注：目前所有的系统已将加密口令移到另一个文件中[(第六章)](#第六章)
 
 ### <span id="2.shell">2.shell</sapn>
 &emsp;　shell是一个命令行解释器，读取用户输入，然后执行命令。
@@ -52,12 +52,12 @@
 &emsp;　**细节：**
 - apue.h：包含了某些标准系统头文件，定义了许多常量及函数原型
 - dirent.h：使用opendir和readdir的函数原型，以及dirent结构的定义
-- main函数的声明使用了[ISO C标准](#第二章)所使用的风格。
+- main函数的声明使用了ISO C标准[(第二章)](#第二章)所使用的风格。
 - 程序获取命令行的第一个参数argv[1]作为要列出其各个目录项的目录名。[第七章](#第七章)说明main函数调用以及程序存取命令行参数和环境变量。
 - 由于各种不同的UNIX系统目录项的实际格式不一样，所以使用函数opendir、readdir和closedir对目录进行处理
 - opendir函数返回指向DIR结构的指针，将该指针传送给readdir函数。
 - readdir返回一个指向dirent结构的指针，而当目录中已无目录项可读时则返回null指针。
-- 在dirent结构中取出的只是每个目录项的名字(d_name)。使用该名字，可调用[stat函数](#4.2)以获得该文件的所有属性。
+- 在dirent结构中取出的只是每个目录项的名字(d_name)。使用该名字，可调用stat函数[(4.2节)](#4.2)以获得该文件的所有属性。
 - 程序调用了两个自编的函数对错误进行处理：err_sys和err_quit。[1.7节叙述出错处理](#1.7)。
 - 当程序结束时，以参数0调用函数eixt。表示正常结束。[8.5节](#8.5)将说明一个程序如何获得它所执行的另一个程序的exit状态。
 
@@ -65,7 +65,7 @@
 &emsp;　所有相对路径名都从工作目录开始解释。进程用chdir函数更改其工作目录。
 
 ### <span id="5.起始目录">5.起始目录(home directory)</span>
-&emsp;　登录时，工作目录设置为起始目录，该起始目录从[口令文件](#1.3)中相应用户的登录项中取得。
+&emsp;　登录时，工作目录设置为起始目录，该起始目录从口令文件[(1.3节)](#1.3)中相应用户的登录项中取得。
 
 ## <span id="1.5">1.5 输入和输出</span>
 ### <span id="1.文件描述符">1.文件描述符(file descriptor)</span>
@@ -86,7 +86,7 @@
 &emsp;　函数open、read、write、lseek以及close提供了不带缓冲的I/O。
 &emsp;　例：mycat.c
 
-- 头文件<unistd.h>(apue.h包含了此头文件)及两个常量STDIN_FILENO和STDOUT_FILENO是[POSIX标准](#第二章)的一部分。头文件<unistd.h>包含了很多UNIX系统服务的函数原型。
+- 头文件<unistd.h>(apue.h包含了此头文件)及两个常量STDIN_FILENO和STDOUT_FILENO是POSIX标准[(第二章)](#第二章)的一部分。头文件<unistd.h>包含了很多UNIX系统服务的函数原型。
 - STDIN_FILENO和STDOUT_FILENO指定了标准输入和标准输出的文件描述符。在POSIX标准中，它们的值分别是0和1.
 - [3.9节](#3.9)将详细讨论BUFFSIZE常量，说明它的各种不同值将如何影响程序的效率。不管BUFFSIZE值如何，mycat.c总能复制任一UNIX普通文件。
 - read函数返回读取的字节数，此值用作要写的字节数。
