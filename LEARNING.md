@@ -11,15 +11,21 @@
 
 ## <span id="1.2">1.2 UNIX体系结构</span>
 &emsp;　**内核(kernel)：** 一种软件，控制计算机硬件资源，提供程序运行环境。
+
 &emsp;　**系统调用(system call)：** 内核的接口
+
 &emsp;　**公用函数库：** 在系统调用接口之上。
+
 &emsp;　**shell：** 一个特殊的应用程序，为运行其他应用程序提供了一个接口。
+
 ![](assests/chapter1/UNIXArchitecture.jpg)
 
 ## <span id="1.3">1.3 登录</span>
 ### <span id="1.登录名">1.登录名</span>
 &emsp;　用户在登录UNIX系统时，先键入登录名，然后键入口令。
+
 &emsp;　系统在其口令文件(通常在/etc/passwd文件)中查看登录名。
+
 &emsp;　**口令文件中的登录项组成(用冒号分隔)：** 登录名、加密口令、数字用户ID(205)、数字组ID(105)、注释字段、起始目录(/home/sar)、shell程序(/bin/ksh)。
 
     例：sar:x:205:105:Stephen Rago:/home/sar:/bin/ksh
@@ -28,27 +34,43 @@
 
 ### <span id="2.shell">2.shell</sapn>
 &emsp;　shell是一个命令行解释器，读取用户输入，然后执行命令。
+
 &emsp;　常见的的shell：Bourne shell、Bourne-again shell、C shell、Korn shell、TENEX C shell。
+
 &emsp;　系统从口令文件中相应用户*登录项的最后一个字段*(bin/ksh)中了解到应该为该登录用户执行哪一个shell。
+
 <a name="0.0.1"></a>
 ## [0.0.2](#1.5) (2018-10-30 21:51)
 ## <span id="1.4">1.4 文件和目录</sapn>
 ### <span id="1.文件系统">1.文件系统</sapn>
 &emsp;　UNIX文件系统时目录和文件的一种层次结构，所有东西的起点是称为 **根(root)** 的目录，其名称是一个字符"/"。
+
 &emsp;　**目录(directory)** 是一个包含目录项的文件。
+
 &emsp;　在逻辑上，可以认为每个目录项都包含一个文件名，同时还包含说明该文件属性的信息。
+
 &emsp;　**文件属性：** 文件类型(普通文件还是目录等)、文件大小、文件所有者、文件权限(其他用户能否访问该文件)、文件最后的修改时间。
+
 &emsp;　stat和fstat函数返回包含所有文件属性的一个信息结构。文件属性详见[第四章](#chapter4)
+
 ### <span id="2.文件名">2.文件名(filename)</sapn>
+
 &emsp;　只有斜线(/)和空字符不能出现在文件名中。
+
 &emsp;　**斜线：** 分隔构成路径名的各文件名
+
 &emsp;　**空字符：** 用来终止一个路径名。
 
 ### <span id="3.路径名">3.路径名</span>
+
 &emsp;　**路径名(pathname)：** 有斜线分隔的一个或多个文件名组成的序列(也可以斜线开头)
+
 &emsp;　**绝对路径名(absolute pathname)：** 以斜线开头的路径名称。
+
 &emsp;　**相对路径名(relative pathname)：** 指向相对于当前目录的文件(不以斜线开头)。
+
 &emsp;　例题：myls.c
+
 &emsp;　**细节：**
 - apue.h：包含了某些标准系统头文件，定义了许多常量及函数原型
 - dirent.h：使用opendir和readdir的函数原型，以及dirent结构的定义
@@ -69,13 +91,18 @@
 
 ## <span id="1.5">1.5 输入和输出</span>
 ### <span id="1.文件描述符">1.文件描述符(file descriptor)</span>
+
 &emsp;　一个很小的非负整数，内核用以标识一个特定进程正在访问的文件。
+
 &emsp;　当内核打开一个现有文件或创建一个新文件时，都返回一个文件描述符。
+
 &emsp;　在读、写文件时，可以使用这个文件描述符。
 
 ### <span id="2.标准输入、标准输出和标准错误">2.标准输入、标准输出和标准错误</span>
 &emsp;　每当运行一个新程序时，所有的shell都为其打开三个文件描述符：**标准输入(standard input)、标准输出(standard output)、标准错误(standard error)**。
+
 &emsp;　大多数shell都提供一种方法，使其中任何一个或所有这3个描述符都能重新定向到某个文件。
+
 &emsp;　例：ls > file.list
 
     执行ls命令，其标准输出重新定向到名为file.list的文件。
@@ -84,6 +111,7 @@
 ### <span id="3.不带缓冲的I/O">3.不带缓冲的I/O</span>
 
 &emsp;　函数open、read、write、lseek以及close提供了不带缓冲的I/O。
+
 &emsp;　例：mycat.c
 
 - 头文件<unistd.h>(apue.h包含了此头文件)及两个常量STDIN_FILENO和STDOUT_FILENO是POSIX标准[(第二章)](#chapter2)的一部分。头文件<unistd.h>包含了很多UNIX系统服务的函数原型。
