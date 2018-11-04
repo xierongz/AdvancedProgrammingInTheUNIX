@@ -314,3 +314,40 @@ prog1 < inputfile | prog2 | prog3 > outputfile
         例：不带缓冲的I/O函数[(见第三章)](#chapter3)和标准I/O函数[(见第五章)](#chapter5)。
             [8.13节](#8.13)将说明system函数的一种实现，它使用基本的进程控制系统调用。
             [10.18节](#10.18)将强化这一实例以正确地处理信号。
+
+# <span id="chapter2">第二章 UNIX标准及实现</span>
+
+## <span id="2.1">2.1 引言</span>
+
+## <span id="2.2">2.2 UNIX标准化</span>
+
+### <span id="2.2.1">2.2.1 ISO C</span>
+
+<center>图2-1 ISO C标准定义的头文件</center>
+
+|    头文件    | FreeBSD 8.0 | Linux 3.2.0 | Mac OS X 10.6.8 | Solaris 10 |              说明              |
+|:------------:|:-----------:|:-----------:|:---------------:|:----------:|:------------------------------:|
+|  <assest.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |          验证程序断言          |
+| <complex.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |        复数算术运算支持        |
+|  <ctype.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |       字符分类和映射支持       |
+|  <errno.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |     出错码[(1.7节)](#1.7)      |
+|   <fenv.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |            浮点环境            |
+|  <float.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |         浮点常量及特性         |
+| <inttypes.h> |   &radic;   |   &radic;   |     &radic;     |  &radic;   |          整型格式变换          |
+|  <iso646.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |    赋值、关系及一元操作符宏    |
+|  <limits.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |    实现常量[(2.5节)](#2.5)     |
+|  <locale.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |      本地化类别及相关定义      |
+|   <math.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |    数学函数、类型声明及常量    |
+|  <setjmp.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |  非局部goto[(7.10节)](#7.10)   |
+|  <signal.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |   信号[(第十章)](#chapter10)   |
+|  <stdarg.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |         可变长度参数表         |
+| <stdbool.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |          布尔类型和值          |
+|  <stddef.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |            标准定义            |
+|  <stdint.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |              整型              |
+|  <stdio.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   | 标准I/O库[(第五章)](#chapter5) |
+|  <stdlib.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |            使用函数            |
+|  <string.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |           字符串操作           |
+|  <tgmath.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |         通用类型数学宏         |
+|   <time.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |  时间和日期[(6.10节)](#6.10)   |
+|  <wchar.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |    扩充的多字节和宽字符支持    |
+|  <wctype.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |      宽字符分类和映射支持      |
