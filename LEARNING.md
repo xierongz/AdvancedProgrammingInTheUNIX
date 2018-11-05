@@ -351,3 +351,54 @@ prog1 < inputfile | prog2 | prog3 > outputfile
 |   <time.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |  时间和日期[(6.10节)](#6.10)   |
 |  <wchar.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |    扩充的多字节和宽字符支持    |
 |  <wctype.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |      宽字符分类和映射支持      |
+
+
+<a name="0.0.6"></a>
+## [0.0.6](#2.2) (2018-11-05 22:33)
+
+### <span id="2.2.2">2.2.2 IEEE POSIX</span>
+
+PSIX:Portable Operating System Interface
+
+<center>图2-2 POSIX标准定义的必需的头文件</center>
+
+|     头文件      | FreeBSD 8.0 | Linux 3.2.0 | Mac OS X 10.6.8 | Solaris 10 |                         说明                         |
+|:---------------:|:-----------:|:-----------:|:---------------:|:----------:|:----------------------------------------------------:|
+|     <aio.h>     |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                       异步I/O                        |
+|    <cpio.h>     |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                      cpio归档值                      |
+|   <dirent.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |               目录项[(4.22节)](#4.22)                |
+|    <dlfcn.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                       动态链接                       |
+|    <fcntl.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |              文件控制[(3.14节)](#3.14)               |
+|   <fnmatch.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                    文件名匹配类型                    |
+|    <glob.h>     |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                 路径名模式匹配与生成                 |
+|     <grp.h>     |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                组文件[(6.4节)](#6.4)                 |
+|    <iconv.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                  代码集变换使用程序                  |
+|  <langinfo.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                     语言信息常量                     |
+|  <monetary.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                    货币类型与函数                    |
+|    <netdb.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                    网络数据库操作                    |
+|  <nl_types.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                        消息类                        |
+|    <poll.h>     |   &radic;   |   &radic;   |     &radic;     |  &radic;   |            投票函数[(14.4.2节)](#14.4.2)             |
+|   <pthread.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   | 线程([第十一章](#chapter11)、[第十二章](#chapter12)) |
+|     <pwd.h>     |   &radic;   |   &radic;   |     &radic;     |  &radic;   |               口令文件[(6.2节)](#6.2)                |
+|    <regex.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                      正则表达式                      |
+|    <sched.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                       执行调度                       |
+|  <semaphore.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                        信号量                        |
+|   <strings.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                      字符串操作                      |
+|     <tar.h>     |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                      tar归档值                       |
+|   <termios.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |           终端I/O[(第十八章)](#chapter18)            |
+|   <unistd.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                       符号常量                       |
+|   <wordexp.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                      字扩充类型                      |
+|  <arpa/inet.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |          因特网定义[(第十六章)](#chapter16)          |
+|   <net/if.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |        套接字本地接口[(第十六章)](#chapter16)        |
+| <netinet/in.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |            因特网地址族[(16.3节)](#16.3)             |
+| <netinet/tcp.h> |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                   传输控制协议定义                   |
+|  <sys/mman.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                     存储管理声明                     |
+| <sys/select.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |           select函数[(14.4.1节)](#14.4.1)            |
+| <sys/socket.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |          套接字接口[(第十六章)](#chapter16)          |
+|  <sys/stat.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |            文件状态[(第四章)](#chapter4)             |
+| <sys/statvfs.h> |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                     文件系统信息                     |
+|  <sys/times.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |              进程时间[(8.17节)](#8.17)               |
+|  <sys/types.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   |           基本系统数据类型[(2.8节)](#2.8)            |
+|   <sys/un.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |          UNIX域套接字定义[(17.2节)](#17.2)           |
+| <sys/utsname.h> |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                系统名[(6.9节)](#6.9)                 |
+|  <sys/wait.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |               进程控制[(8.6节)](#8.6)                |
