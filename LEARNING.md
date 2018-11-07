@@ -426,7 +426,6 @@ POSIX:Portable Operating System Interface
 |   <sys/uio.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |   矢量I/O操作[(14.6节)](#14.6)    |
 
 <center>图2-4 POSIX标准定义的可选头文件</center>
-
 |   头文件   | FreeBSD 8.0 | Linux 3.2.0 | Mac OS X 10.6.8 | Solaris 10 | 说明          |
 |:----------:|:-----------:|:-----------:|:---------------:|:----------:| ------------- |
 | <mqueue.h> |   &radic;   |   &radic;   |                 |  &radic;   | 消息队列      |
