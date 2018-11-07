@@ -358,7 +358,7 @@ prog1 < inputfile | prog2 | prog3 > outputfile
 
 ### <span id="2.2.2">2.2.2 IEEE POSIX</span>
 
-PSIX:Portable Operating System Interface
+POSIX:Portable Operating System Interface
 
 <center>图2-2 POSIX标准定义的必需的头文件</center>
 
@@ -402,3 +402,32 @@ PSIX:Portable Operating System Interface
 |   <sys/un.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |          UNIX域套接字定义[(17.2节)](#17.2)           |
 | <sys/utsname.h> |   &radic;   |   &radic;   |     &radic;     |  &radic;   |                系统名[(6.9节)](#6.9)                 |
 |  <sys/wait.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |               进程控制[(8.6节)](#8.6)                |
+
+<a name="0.0.7"></a>
+## [0.0.7](#2.2) (2018-11-07 23:37)
+
+<center>图2-3 POSIX标准定义的XSI可选头文件</center>
+
+|      头文件      | FreeBSD 8.0 | Linux 3.2.0 | Mac OS X 10.6.8 | Solaris 10 |               说明                |
+|:----------------:|:-----------:|:-----------:|:---------------:|:----------:|:---------------------------------:|
+|    <fmtmsg.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |           消息显示结构            |
+|     <ftw.h>      |   &radic;   |   &radic;   |     &radic;     |  &radic;   |    文件树漫游[(4.22节)](#4.22)    |
+|    <libgen.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |          路径名管理函数           |
+|     <ndbm.h>     |   &radic;   |             |     &radic;     |  &radic;   |            数据库管理             |
+|    <search.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |              搜索表               |
+|    <syslog.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   | 系统出错日志记录[(13.4节)](#13.4) |
+|    <utmpx.h>     |             |   &radic;   |     &radic;     |  &radic;   |          用户账户数据库           |
+|   <sys/ipc.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |       IPC[(15.6节)](#15.6)        |
+|   <sys/msg.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |   XSI消息队列[(15.7节)](#15.7)    |
+| <sys/resource.h> |   &radic;   |   &radic;   |     &radic;     |  &radic;   |     资源操作[(7.11节)](#7.11)     |
+|   <sys/sem.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |    XSI信号量[(15.8节)](#15.8)     |
+|   <sys/shm.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |   XSI共享存储[(15.9节)](#15.9)    |
+|   <sys/time.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |             时间类型              |
+|   <sys/uio.h>    |   &radic;   |   &radic;   |     &radic;     |  &radic;   |   矢量I/O操作[(14.6节)](#14.6)    |
+
+<center>图2-4 POSIX标准定义的可选头文件</center>
+
+|   头文件   | FreeBSD 8.0 | Linux 3.2.0 | Mac OS X 10.6.8 | Solaris 10 | 说明          |
+|:----------:|:-----------:|:-----------:|:---------------:|:----------:| ------------- |
+| <mqueue.h> |   &radic;   |   &radic;   |                 |  &radic;   | 消息队列      |
+| <spawn.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   | 实时spawn接口 |
