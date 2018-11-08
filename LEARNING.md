@@ -354,7 +354,7 @@ prog1 < inputfile | prog2 | prog3 > outputfile
 
 
 <a name="0.0.6"></a>
-## [0.0.6](#2.2) (2018-11-05 22:33)
+## [0.0.6](#2.2.2) (2018-11-05 22:33)
 
 ### <span id="2.2.2">2.2.2 IEEE POSIX</span>
 
@@ -404,7 +404,7 @@ POSIX:Portable Operating System Interface
 |  <sys/wait.h>   |   &radic;   |   &radic;   |     &radic;     |  &radic;   |               进程控制[(8.6节)](#8.6)                |
 
 <a name="0.0.7"></a>
-## [0.0.7](#2.2) (2018-11-07 23:37)
+## [0.0.7](#2.2.2) (2018-11-07 23:37)
 
 
 <center>图2-3 POSIX标准定义的XSI可选头文件</center>
@@ -433,3 +433,60 @@ POSIX:Portable Operating System Interface
 |:----------:|:-----------:|:-----------:|:---------------:|:----------:| ------------- |
 | <mqueue.h> |   &radic;   |   &radic;   |                 |  &radic;   | 消息队列      |
 | <spawn.h>  |   &radic;   |   &radic;   |     &radic;     |  &radic;   | 实时spawn接口 |
+
+<a name="0.0.8"></a>
+## [0.0.8](#2.2.2) (2018-11-08 22:14)
+
+<center>图2-5 POSIX.1 可选接口组和选项码</center>
+
+| 选项码 | SUS强制的 |             符号常量              |              说明              |
+|:------:|:---------:|:---------------------------------:|:------------------------------:|
+|  ADV   |           |       _POSIX_ADVISORY_INFO        |        建议性信息(实时)        |
+|  CPT   |           |          _POSIX_CPUTIME           |     进程CPU时间时钟(实时)      |
+|  FSC   |  &radic;  |           _POSIX_FSYNC            |            文件同步            |
+|  IP6   |           |            _POSIX_IPV6            |            IPv6接口            |
+|   ML   |           |          _POSIX_MEMLOCK           |      进程存储区加锁(实时)      |
+|  MLR   |           |       _POSIX_MEMLOCK_RANGE        |       存储区域加锁(实时)       |
+|  MON   |           |      _POSIX_MONOTONIC_CLOCK       |         单调时钟(实时)         |
+|  MSG   |           |      _POSIX_MESSAGE_PASSING       |         消息传送(实时)         |
+|   MX   |           |         __STDC_IEC_559__          |        IEC60559浮点选项        |
+|  PIO   |           |      _POSIX__PRIORITIZED_IO       |         优先输入和输出         |
+|   PS   |           |  _POSIX__PRIORITIZED_SCHEDULING   |         进程调度(实时)         |
+|  RPI   |           | _POSIX_THREAD_ROBUST_PRIO_INHERIT |  健壮的互斥量优先权继承(实时)  |
+|  RPP   |           | _POSIX_THREAD_ROBUST_PRIO_PROTECT |  健壮的互斥量优先权保护(实时)  |
+|   RS   |           |        _POSIX_RAW_SOCKETS         |           原始套接字           |
+|  SHM   |           |   _POSIX_SHARED_MEMORY_OBJECTS    |       共享存储对象(实时)       |
+|  SIO   |           |      _POSIX_SYNCHRONIZED_IO       |      同步输入和输出(同时)      |
+|  SPN   |           |           _POSIX_SPAWN            |           产生(实时)           |
+|   SS   |           |      _POSIX_SPORADIC_SERVER       |     进程阵发性服务器(实时)     |
+|  TCT   |           |       _POSIX_THREAD_CPUTIME       |     线程CPU时间时钟(实时)      |
+|  TPI   |           |    _POSIX_THREAD_PRIO_INHERIT     | 非健壮的互斥量优先权继承(实时) |
+|  TPP   |           |    _POSIX_THREAD_PRIO_PROTECT     | 非健壮的互斥量优先权保护(实时) |
+|  TPS   |           | _POSIX_THREAD_PRIORITY_SCHEDULING |       线程执行调度(实时)       |
+|  TSA   |  &radic;  |   _POSIX_THREAD_ATTR_STACKADDR    |         线程栈地址属性         |
+|  TSH   |  &radic;  |   _POSIX_THREAD_PROCESS_SHARED    |        线程进程共享同步        |
+|  TSP   |           |   _POSIX_THREAD_SPORADIC_SERVER   |     线程阵发性服务器(实时)     |
+|  TSS   |  &radic;  |   _POSIX_THREAD_ATTR_STACKSIZE    |         线程栈长度属性         |
+|  TYM   |           |    _POSIX_TYPED_MEMORY_OBJECTS    |       类型存储对象(实时)       |
+|  XSI   |  &radic;  |            _XOPEN_UNIX            |         X/Open扩充接口         |
+
+
+POSIX.1 没有包括超级用户(superuser)这样的概念，代之以估计定某些操作要求"适当的优先权"。
+
+
+### <span id="2.2.3">2.2.3 Single UNIX Speification</span>
+
+**Single UNIX Speification(SUS,单一UNIX规范)** 是POSIX.1标准的一个超集，定义了一些附加接口扩展了POSIX.1规范提供的功能。
+
+POSIX.1中的 **X/Open系统接口(X/Open System Interface,XSI)** 选项描述了可选的接口，也定义了遵循 **XSI(XSI conforming)** 的实现必须支持POSIX.1的哪些可选部分。
+必须支持的部分包括： **文件同步、线程栈地址和长度属性、线程进程共享同步以及_XOPEN_UNIX符号常量。**
+可选接口分为若干选项组(option group):
+- **加密：** 由符号常量_XOPEN_CRYPE标记。
+- **实时：** 由符号常量_XOPEN_REALTIME标记。
+- **高级实时。**
+- **实时线程：** 由符号常量_XOPEN_REALTIME_THREADS标记。
+- **高级实时线程。**
+
+### <span id="2.2.4">2.2.4 FIPS</span>
+
+FIPS代表的是 **联邦信息处理标准(Fedral Information Processing Standard)。**
