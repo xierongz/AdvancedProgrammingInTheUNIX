@@ -490,3 +490,179 @@ POSIX.1中的 **X/Open系统接口(X/Open System Interface,XSI)** 选项描述了可选的接口
 ### <span id="2.2.4">2.2.4 FIPS</span>
 
 FIPS代表的是 **联邦信息处理标准(Fedral Information Processing Standard)。**
+
+<a name="0.0.9"></a>
+## [0.0.9](#2.3) (2018-11-09 23:44)
+
+## <span id="2.3">2.3 UNIX 系统实现</span>
+
+UNIX家族树分支
+- AT&T分支，从此引出了系统Ⅲ和系统Ⅴ(被称为UNIX系统家族的商用版本)
+- 加州大学伯克利分校分支，从此引出4.xBSD实现。
+- 有AT&T贝尔实验室的计算科学研究中心不断开发的UNIX研究版本，从此引出UNIX分时系统第8版、第9版，终止于1990年的第10版。
+
+<a name="0.0.10"></a>
+## [0.0.10](#2.3) (2018-11-11 12:34)
+### <span id="2.3.1">2.3.1 SVR4</span>
+
+**SVR4(UNIX System V Release 4):** 将下列系统的功能合并到了一个一致的操作系统中，AT&T UNIX系统V 3.2版(SVR3.2)、Sun Microsystems公司的SunOS操作系统、加州大学伯克利分校的4.3BSD以及微软的Xenix系统。
+
+### <span id="2.3.2">2.3.2 4.4BSD</span>
+
+**BSD(Berkeley Software Distribution)**
+
+### <span id="2.3.3">2.3.3 FreeBSD</span>
+
+FreeBSD基于4.4BSD-Lite操作系统。
+
+### <span id="2.3.4">2.3.4 Linux</span>
+
+Linux是一种提供类似于UNIX的丰富编程环境的操作系统，在GNU公用许可证的指导下，Linux是免费使用的
+
+### <span id="2.3.5">2.3.5 Mac OS X</span>
+
+### <span id="2.3.6">2.3.6 Solaris</span>
+
+Solaris是由Sun Microsystems(现为Oracle)开发的UNIX系统版本。
+
+### <span id="2.3.7">2.3.7 其他UNIX系统</span>
+
+- AIX，IBM版的UNIX系统
+- HP-UX，HP版的UNIX系统
+- IRIX，Silicon Graphics版的UNIX系统
+- Unix Ware，SVR4派生的UNIX系统，现由SCO销售
+
+## <span id="2.4">2.4 标准和实现的关系</span>
+
+## <span id="2.5">2.5 限制</span>
+
+**以下两种类型的限制是必需的：**
+
+- 编译时限制(例：短整型的最大值是什么？)
+- 运行时限制(例：文件名有多少个字符？)
+
+编译时限制可在头文件中定义。
+运行时限制则要求进程调用一个函数获得限制值。
+
+某些限制在一个给定的实现中是固定的，而在另一个实现中则可能是变动的。(例：文件名的最大字符数)
+解决这类问题，提供一下3种限制：
+
+- **编译时限制(头文件)**
+- **与文件或目录无关的运行时限制(sysconf函数)**
+- **与文件或目录有关的运行时限制(pathconf和fpathconf函数)**
+
+### <span id="2.5.1">2.5.1 ISO C限制</span>
+ISO C定义的所有编译时限制都列在头文件<limits.h>中(见图2.-6)
+
+<center>图2-6 <limits.h>中定义的整型值大小</center>
+
+|    名称    |                说明                |       可接受的最小值       |           典型值            |
+|:----------:|:----------------------------------:|:--------------------------:|:---------------------------:|
+|  CHAR_BIT  |             char的位数             |             8              |              8              |
+|  CHAR_MAX  |            char的最大值            |           (见后)           |             127             |
+|  CHAR_MIN  |            char的最小值            |           (见后)           |            -128             |
+| SCHAR_MAX  |        signed char的最大值         |            127             |             127             |
+| SCHAR_MIN  |        signed char的最小值         |            -127            |            -128             |
+| UCHAR_MAIX |       unsigned char的最大值        |            255             |             255             |
+|  INT_MAX   |            int的最大值             |           32 767           |        2 147 483 647        |
+|  INT_MIN   |            int的最小值             |          -32 767           |       -2 147 483 648        |
+|  UINT_MAX  |        unsigned int的最大值        |           65 535           |        4 294 967 295        |
+|  SHRT_MAX  |           short的最大值            |           32 767           |           32 767            |
+|  SHRT_MIN  |           short的最小值            |          -32 767           |           -32 768           |
+| USHRT_MAX  |       unsigned short的最大值       |           65 535           |           65 535            |
+|  LONG_MAX  |            long的最大值            |       2 147 483 647        |        2 147 483 647        |
+|  LONG_MIN  |            long的最小值            |       -2 147 483 647       |       -2 147 483 647        |
+| ULONG_MAX  |       unsigned long的最大值        |       4 294 967 295        |        4 294 967 295        |
+| LLONG_MAX  |         long long的最大值          | 9 223 372 036 854 775 807  |  9 223 372 036 854 775 807  |
+| LLONG_MIN  |         long long的最小值          | -9 223 372 036 854 775 807 | - 9 223 372 036 854 775 807 |
+| ULLONG_MAX |     unsigned long long的最大值     | 18 446 744 073 709 551 614 | 18 446 744 073 709 551 614  |
+| MB_LEN_MAX | 在一个多字节字符常量中的最大字节数 |             1              |              6              |
+
+<center>图2-7 在各种平台上ISO的限制</center>
+
+| 限制         | FreeBSD 8.0 | Linux 3.2.0 | Mac OS X 10.6.8 | Solaris 10 |
+|:------------ | -----------:| -----------:| ---------------:| ----------:|
+| FOPEN_MAX    |          20 |          16 |              20 |         20 |
+| TMP_MAX      | 308 915 776 |     238 328 |     308 915 776 |     17 576 |
+| FILENAME_MAX |        1024 |        4096 |            1024 |       1024 |
+
+### <span id="2.5.2">2.5.2 POSIX限制</span>
+
+与POSIX.1接口有关的限制和常量
+
+- **数值限制：** LONG_BIT、SSIZE_MAX和WORD_BIT。
+- **最小值：** 图2-8中的25个常量。
+- **最大值：**  \_POSIX_CLOCKRES_MIN
+- **运行时可以增加的值：** CHARCLASS_NAME_MAX、COLL_WEIGHTS_MAX、LINE_MAX、NGROUPS_MAX和RE_DUP_MAX。
+- **运行时不变值(可能不确定)：** 图2-9中的17个常量(加上[12.2节](#12.2)中介绍的4个常量和[14.5节](#14.5)中介绍的3个常量)。
+- **其他不变值：** NL_ARGMAX、NL_MSGMAX、NL_SETMAX和NL_TEXTMAX。
+- **路径名可变值：** FILESIZEBITS、LINK_MAX、MAX_CANON、MAX_INPUT、NAME_MAX、PATH_MAX、PIPE_BUF和SYMLINK_MAX。
+[2.5.4节](#2.5.4)将说明sysconf、pathconf和fpathconf函数。
+
+<center>图2-8 <limits.h>中的POSIX.1最小值</center>
+
+| 名称                  | 说明：最小可接受值                                                              |     值 |
+|:--------------------- |:------------------------------------------------------------------------------- | ------:|
+| _POSIX_ARG_MAX        | exec函数的参数长度                                                              |  4 096 |
+| _POSIX_CHILD_MAX      | 每个实际用户ID的子进程数                                                        |     25 |
+| _POSIX_DELAYTIMER_MAX | 定时器最大超限运行次数                                                          |     32 |
+| _POSIX_HOST_NAME_MAX  | gethostname函数返回的主机名长度                                                 |    255 |
+| _POSIX_LINK_MAX       | 至一个文件的链接数                                                              |      8 |
+| _POSIX_LOGIN_NAME_MAX | 登录名的长度                                                                    |      9 |
+| _POSIX_MAX_CANON      | 终端规范输入队列的字节数                                                        |    255 |
+| _POSIX_MAX_INPUT      | 终端输入队列的可用空间                                                          |    255 |
+| _POSIX_HOST_NAME_MAX  | 文件名中的字节数，不包括中null字节                                              |     14 |
+| _POSIX_NGROUPS_MAX    | 每个进程同时添加的组ID数                                                        |      8 |
+| _POSIX_OPEN_MAX       | 每个进程的打开文件树                                                            |     20 |
+| _POSIX_PATH_MAX       | 路径名中的字节数，包括终止null字节                                              |    256 |
+| _POSIX_PIPE_BUF       | 能原子地写到一个管道中的字节数                                                  |    512 |
+| _POSIX_RE_DUP_MAX     | 当使用间隔表示法\{m,n\}时，regexec和regcomp函数允许的基本正则表达式重复发生次数 |    255 |
+| _POSIX_RTSIG_MAX      | 为应用预留的实时信号编号个数                                                    |      8 |
+| _POSIX_SEM_NSEMS_MAX  | 一个进程可以同时使用的信号量个数                                                |    256 |
+| _POSIX_SEM_VALUE_MAX  | 信号量可持有的值                                                                | 32 767 |
+| _POSIX_SIGQUEUE_MAX   | 一个进程可发送和挂起的片对信号的个数                                            |     32 |
+| _POSIX_SSIZE_MAX      | 能存在ssize_t对象中的值                                                         | 32 767 |
+| _POSIX_STREAM_MAX     | 一个进程能同时打开的标准I/O流数                                                 |      8 |
+| _POSIX_SYMLINK_MAX    | 符号链接中的字节数                                                              |    255 |
+| _POSIX_SYMLOOP_MAX    | 在解析路径名时，可遍历的符号链接数                                              |      8 |
+| _POSIX_TIMER_MAX | 每个进程的定时器数目                                                            |     32 |
+| _POSIX_TTY_NAME_MAX   | 终端设备名长度，包括终止null字节                                                |      9 |
+| _POSIX_TZNAME_MAX     | 时区名字节数                                                                    |      6 |
+
+<center>图2-9 <limits.h>中的POSIX.1运行时不变值</center>
+
+| 名称           | 说明                                    | 最小可接受值          |
+|:-------------- |:--------------------------------------- |:--------------------- |
+| ARG_MAX        | exec函数族的参数最大长度                | _POSIX_ARG_MAX        |
+| ATEXIT_MAX     | 可用atexit函数登记的最大函数个数        | 32                    |
+| CHILD_MAX      | 每个实际用户ID的子进程最大个数          | _POSIX_CHILD_MAX      |
+| DELAYTIMER_MAX | 定时器最大超额运行次数                  | _POSIX_DELAYTIMER_MAX |
+| HOST_NAME_MAX  | gethostname返回的主机名长度             | _POSIX_HOST_NAME_MAX  |
+| LOGIN_NAME_MAX | 登录名最大长度                          | _POSIX_LOGIN_NAME_MAX |
+| OPEN_MAX       | 赋予新建文件描述符的最大值+1            | _POSIX_OPEN_MAX       |
+| PAGESIZE       | 系统内存页大小(以字节为单位)            | 1                     |
+| RTSIG_MAX      | 为应用程序预留的实时信号最大个数        | _POSIX_RTSIG_MAX      |
+| SEM_NSEMS_MAX  | 一个进程可使用的信号量最大个数          | _POSIX_SEM_NSEMS_MAX  |
+| SEM_VALUE_MAX  | 信号量的最大值                          | _POSIX_SEM_VALUE_MAX  |
+| SIGQUEUE_MAX   | 一个进程可排队信号的最大个数            | _POSIX_SIGQUEUE_MAX   |
+| STREAM_MAX     | 一个进程一次可打开的标准I/O流的最大个数 | _POSIX_STREAM_MAX     |
+| SYMLOOP_MAX    | 路径解析过程中可访问的符号链接数        | _POSIX_SYMLOOP_MAX    |
+| TIMER_MAX      | 一个进程的定时器最大个数                | _POSIX_TIMER_MAX      |
+| TTY_NAME_MAX   | 终端设备名长度，其中包括终止的null字节  | _POSIX_TTY_NAME_MAX   |
+| TZNAME_MAX     | 时区名的字节数                          | _POSIX_TZNAME_MAX     |
+
+
+### <span id="2.5.3">2.5.3 XSI限制</span>
+**XSI定义了代表实现限制的几个常量：**
+- 最小值：图2-10中列出的5个常量。
+- 运行时不变值(可能不确定)：IOV_MAX和PAGE_SIZE。
+
+<center>图2-10 <limits.h>中的XSI最小值</center>
+
+| 名称            | 说明                                   | 最小可接受值 | 典型值 |
+|:--------------- |:-------------------------------------- | ------------:| ------:|
+| NL_LANGMAX      | 在LANG环境变量中最大字节数             |           14 |     14 |
+| NZERO           | 默认进程优先级                         |           20 |     20 |
+| _XOPEN_IOV_MAX  | readv或writev可使用的最多iovec结构个数 |           16 |     16 |
+| _XOPEN_NAME_MAX | 文件名中的字节数                       |          255 |    255 |
+| _XOPEN_PATH_MAX | 路径名中的字节数                       |         1024 |   1024 |
