@@ -653,6 +653,7 @@ ISO C定义的所有编译时限制都列在头文件<limits.h>中(见图2.-6)
 
 
 ### <span id="2.5.3">2.5.3 XSI限制</span>
+
 **XSI定义了代表实现限制的几个常量：**
 - 最小值：图2-10中列出的5个常量。
 - 运行时不变值(可能不确定)：IOV_MAX和PAGE_SIZE。
@@ -666,3 +667,111 @@ ISO C定义的所有编译时限制都列在头文件<limits.h>中(见图2.-6)
 | _XOPEN_IOV_MAX  | readv或writev可使用的最多iovec结构个数 |           16 |     16 |
 | _XOPEN_NAME_MAX | 文件名中的字节数                       |          255 |    255 |
 | _XOPEN_PATH_MAX | 路径名中的字节数                       |         1024 |   1024 |
+
+### <span id="2.5.4">2.5.4 函数sysconf、pathconf和fpathconf</span>
+
+```C
+#include <unistd.h>
+
+long sysconf(int name);
+long pathconf(const char *pathname, int name);
+long fpathconf(int fd, int name);
+```
+**所有函数返回值：若成功，返回相应值；若出错，返回-1(见后)**
+后面两个函数的差别是：**一个用路径名作为其参数，另一个则取文件描述符作为参数。**
+
+讨论这3个函数不同的返回值：
+
+- *如果name参数并不是一个合适的常量，这3个函数都返回，并把errno置为EINVAL。
+    图2-11和图2-12的第三列给出了我们在整本书中将要涉及的限制常量。*
+- *有些name会返回一个变量值(返回值$\ge$0)或者提示该值是不确定的。不确定的值通过返回-1来体现，而不改变errno的值。*
+- *_SC_CLK_TCK的返回值是每秒的时钟滴答数，用于times函数的返回值([8.17节](#8.17))。*
+
+对于pathconf的参数pathname和fpathconf的参数fd有很多限制。如果不满足其中任何一个限制，则结果是未定义的。
+
+- *_PCMAX_CANON和_PC_MAX_INPUT引用的文件必须是终端文件。*
+- *_PC_LINK_MAX和_PC_TIMESTAMP_RESOLUTION引用的文件可以是文件或目录。如果是目录，则返回值用于目录本身，而不用与目录内的文件名项。*
+- *_PC_FILESIZEBITS和_PC_NAME_MAX引用的文件必须是目录，返回值用于该目录中的文件名。*
+- *_PC_PATH_MAX引用的文件必须是目录。当指定的目录是工作目录时，返回值是相对路径名的最大长度(但这不是我们想要知道的一个绝对路径名的实际最大长度，[2.5.5节](#2.5.5)将再次回到这一问题)。*
+- *_PC_PIPE_BUF引用的文件必须是管道、FIFO或目录。在管道或FIFO情况下，返回值是对所引用的管道或FIFO的限制值。对于目录，返回值是对在该目录中创建的任一FIFO的限制值。*
+- *_PC_SYMLINK_MAX引用的文件必须是目录。返回值是该目录中符号链接可包含字符串的最大长度。*
+
+<center>图2-11 对sysconf的限制及name参数</center>
+
+| 限制名           | 说明                                                                                      | name参数             |
+|:---------------- |:----------------------------------------------------------------------------------------- |:-------------------- |
+| ARG_MAX          | exec函数族的参数最大长度(字节)                                                            | _SC_ARG_MAX          |
+| ATEXIT_MAX       | 可用atexit函数登记的最大函数个数                                                          | _SC_ATEXIT_MAX       |
+| CHILD_MAX        | 每个实际用户ID的最大子进程数                                                              | _SC_CHILD_MAX        |
+| 时钟滴答/秒      | 每秒时钟滴答数                                                                            | _SC_CLK_TCK          |
+| COLL_WEIGHTS_MAX | 在本地定义文件中可以赋予LC_COLLATE顺序关键字项的最大权重数                                | _SC_COLL_WEIGHTS_MAX |
+| DELAYTIMER_MAX   | 定时器最大超限运行次数                                                                    | _SC_DELAYTIMER_MAX   |
+| HOST_NAME_MAX    | gethostname函数返回的主机名最大长度                                                       | _SC_HOST_NAME_MAX    |
+| IOV_MAX          | readv或writev可以使用最多的iovec结构的个数                                                | _SC_IOV_MAX          |
+| LINE_MAX         | 使用程序输入行的最大长度                                                                  | _SC_LINE_MAX         |
+| LOGIN_NAME_MAX   | 登录名的最大长度                                                                          | _SC_LOGIN_NAME_MAX   |
+| NGROUPS_MAX      | 每个进程同时添加的最大进程组ID数                                                          | _SC_NGROUPS_MAX      |
+| OPEN_MAX         | 每个进程最大打开文件数                                                                    | _SC_OPEN_MAX         |
+| PAGESIZE         | 系统存储页长度(字节数)                                                                    | _SC_PAGESIZE         |
+| PAGE_SIZE        | 系统存储页长度(字节数)                                                                    | _SC_ARG_MAXPAGE_SIZE |
+| RE_DUP_MAX       | 当使用间隔表示法\{m,n\}时，regexec和regcomp函数允许的基本正则表达式重复发生次数           | _SC_RE_DUP_MAX       |
+| RTSIG_MAX        | 为应用程序预留的实时信号的最大个数                                                        | _SC_RTSIG_MAX        |
+| SEM_NSEMS_MAX    | 一个进程可使用的信号量最大个数                                                            | _SC_SEM_NSEMS_MAX    |
+| SEM_VALUE_MAX    | 信号量的最大值                                                                            | _SC_SEM_VALUE_MAX    |
+| SIGQUEUE_MAX     | 一个进程可一个进程可排队信号的最大个数                                                    | _SC_SIGQUEUE_MAX     |
+| STREAM_MAX       | 一个_SCSTREAM_MAX进程在任意给定时刻标准I/O流的最大个数。如果定义，必须与FOPEN_MAX有相同值 | _SC_STREAM_MAX       |
+| SYMLOOP_MAX      | 在解析路径名时，可遍历的符号链接数                                                        | _SC_SYMLOOP_MAX      |
+| TIMER_MAX        | 每个进程的最大定时器个数                                                                  | _SC_TIMER_MAX        |
+| TTY_NAME_MAX     | 终端设备名长度，包括终止null字节                                                          | _SC_TTY_NAME_MAX     |
+| TZNAME_MAX       | 时区名中的最大字节数                                                                      | _SC_TZNAME_MAX       |
+
+<center>图2-12 对pathconf和fpathconf的限制及name参数</center>
+
+| 限制名                      | 说明                                                                    | name参数                 |
+|:--------------------------- |:----------------------------------------------------------------------- |:------------------------ |
+| FILESIZEBITS                | 以带符号整型值表示在指定目录中允许的普通文件最大长度所需的最小位(bit)数 | _PC_FILESIZEBITS         |
+| LINK_MAX                    | 文件链接计数的最大值                                                    | _PC_LINK_MAX             |
+| MAX_CANON                   | 终端规范输入队列的最大字节数                                            | _PC_MAX_CANON            |
+| MAX_INPUT                   | 终端输入队列可用空间的字节数                                            | _PC_MAX_INPUT            |
+| NAME_MAX                    | 文件名的最大字节数(不包括终止null字节)                                  | _PC_NAME_MAX             |
+| PATH_MAX                    | 相对路径名的最大字节数，包括终止null字节                                | _PC_PATH_MAX             |
+| PIPE_BUF                    | 能原子地写到管道的最大字节数                                            | _PC_PIPE_BUF             |
+| _POSIX_TIMESTAMP_RESOLUTION | 文件时间戳的纳秒精度                                                    | _PC_TIMESTAMP_RESOLUTION |
+| SYMLINK_MAX                 | 符号链接的字节数                                                        | _PC_SYMLINK_MAX          |
+
+例：[makeconf.awk](例题/chapter2//standards/makeopt.awk)，打印各pathconf和sysconf符号的值。
+    [conf.c.modified](例题/chapter2//standards/conf.c.modified)，有awk产生的C程序，打印所有这些限制，并处理未定义限制的情况。
+
+<center>图2-15 配置限制的实例</center>
+
+| 限制               | FreeBSD 8.0 |   Linux 3.2.0 | Mac OS X 10.6.8 | Solaris 10(UFS文件系统) | Solaris 10(:文件系统) |
+|:------------------ | -----------:| -------------:| ---------------:| -----------------------:| ---------------------:|
+| ARG_MAX            |     262 144 |     2 097 152 |         262 144 |               2 096 640 |             2 096 640 |
+| ATEXIT_MAX         |          32 | 2 147 483 647 |   2 147 483 647 |                  无限制 |                无限制 |
+| CHARCLASS_NAME_MAX |      无符号 |         2 048 |              14 |                      14 |                    14 |
+| CHILD_MAX          |       1 760 |        47 211 |             266 |                   8 021 |                 8 021 |
+| 时钟滴答/秒        |         128 |           100 |             100 |                     100 |                   100 |
+| COLL_WEIGHTS_MAX   |           0 |           255 |               2 |                      10 |                    10 |
+| FILESIZEBITS       |          64 |            64 |              64 |                      41 |                不支持 |
+| HOST_NAME_MAX      |         255 |            64 |             255 |                     255 |                   255 |
+| IOV_MAX            |       1 024 |         1 024 |           1 024 |                      16 |                    16 |
+| LINE_MAX           |       2 048 |         2 048 |           2 048 |                   2 048 |                 2 048 |
+| LINK_MAX           |      32 767 |        65 000 |          32 767 |                  32 767 |                     1 |
+| LOGIN_NAME_MAX     |          17 |           256 |             255 |                       9 |                     9 |
+| MAX_CANON          |         255 |           255 |           1 024 |                     256 |                   256 |
+| MAX_INPUT          |         255 |           255 |           1 024 |                     512 |                   512 |
+| NAME_MAX           |         255 |           255 |             255 |                     255 |                     8 |
+| NGROUPS_MAX        |       1 023 |        65 536 |              16 |                      16 |                    16 |
+| OPEN_MAX           |       3 520 |         1 024 |             256 |                     256 |                   256 |
+| PAGESIZE           |       4 096 |         4 096 |           4 096 |                   8 192 |                 8 192 |
+| PAGE_SIZE          |       4 096 |         4 096 |           4 096 |                   8 192 |                 8 192 |
+| PATH_MAX           |       1 024 |         4 096 |           1 024 |                   1 024 |                 1 024 |
+| PIPE_BUF           |         512 |         4 096 |             512 |                   5 120 |                 5 120 |
+| RE_DUP_MAX         |         255 |        32 767 |             255 |                     255 |                   255 |
+| STREAM_MAX         |       3 520 |            16 |              20 |                     256 |                   256 |
+| SYMLINK_MAX        |       1 024 |        无限制 |             255 |                   1 024 |                 1 024 |
+| SYMLOOP_MAX        |          32 |        无限制 |              32 |                      20 |                    20 |
+| TTY_NAME_MAX       |         255 |            32 |             255 |                     128 |                   128 |
+| TZNAME_MAX         |         255 |             6 |             255 |                  无限制 |                无限制 |
+
+### <span id="2.5.5">2.5.5 不确定的运行时限制</span>
