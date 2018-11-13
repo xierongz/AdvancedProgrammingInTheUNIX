@@ -739,8 +739,8 @@ long fpathconf(int fd, int name);
 | _POSIX_TIMESTAMP_RESOLUTION | 文件时间戳的纳秒精度                                                    | _PC_TIMESTAMP_RESOLUTION |
 | SYMLINK_MAX                 | 符号链接的字节数                                                        | _PC_SYMLINK_MAX          |
 
-例：[makeconf.awk](例题/chapter2//standards/makeopt.awk)，打印各pathconf和sysconf符号的值。
-    [conf.c.modified](例题/chapter2//standards/conf.c.modified)，有awk产生的C程序，打印所有这些限制，并处理未定义限制的情况。
+例：[makeconf.awk](例题/chapter2/standards/makeopt.awk)，打印各pathconf和sysconf符号的值。
+    [conf.c.modified](例题/chapter2/standards/conf.c.modified)，有awk产生的C程序，打印所有这些限制，并处理未定义限制的情况。
 
 <center>图2-15 配置限制的实例</center>
 
@@ -775,3 +775,20 @@ long fpathconf(int fd, int name);
 | TZNAME_MAX         |         255 |             6 |             255 |                  无限制 |                无限制 |
 
 ### <span id="2.5.5">2.5.5 不确定的运行时限制</span>
+
+两个特殊情况：
+- 为一个路径名分配存储区。
+- 确定文件描述符的数目。
+
+#### <span id="2.5.5.1">1. 路径名</span>
+
+很多程序需要为路径名分配存储区，一般在编译时就为其分配了存储区。
+POSIX.1试图使用PATH_MAX值来帮助我们，但是如果此值是不确定的，那么仍是毫无帮助的。
+
+例：[pathalloc.c](例题/chapter2/lib/pathalloc.c)：本书用来为路径名动态分配存储区的库函数。
+
+**注：处理PATH_MAX不确定结果情况的正确方法与如何使用分配的存储空间有关。**
+
+例：如果为getwd调用分配存储空间(返回当前工作目录的绝对路径名，见[4.23节](#4.23))，但分配到的空间太小，则会返回一个错误，并将errno设置为ERANGE。然后调用realloc来增加分配的空间(见[7.8节](#7.8)和[习题4.16](习题/chapter4/training4.16.c))并重试。不断重复操作，知道getwd调用成功执行。
+
+#### <span id="2.5.5.2">2. 最大打开文件数</span>
